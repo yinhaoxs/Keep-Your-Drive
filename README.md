@@ -69,7 +69,7 @@ python mtcnn_pytorch/mtcnn.py  or python dlib/align.py
 
 ```
 ​```
-python train_kydnet.py
+python train.py
 
 ​```
 ```
@@ -77,7 +77,7 @@ python train_kydnet.py
 
 ```
 ​```
-python test_kydnet.py
+python test.py
 
 ​```
 ```
@@ -93,7 +93,7 @@ python test_kydnet.py
         \text{loss}(x, y) = \max(0, -y * (x1 - x2) + \text{margin})
 
 
-#### 4.2 Calculate Gini
+#### 4.2 Calculate gini
 
 ```
 ​```
@@ -102,7 +102,7 @@ python utils/gini.py
 ​```
 ```
 
-#### 4.3 Calculate Std
+#### 4.3 Calculate std
 ```
 ​```
 python utils/score.py
@@ -129,3 +129,4 @@ python data/dataread.py(compute_std)
 
 
 
+# Arcface_RankNet
