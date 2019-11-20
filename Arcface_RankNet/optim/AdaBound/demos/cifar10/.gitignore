@@ -1,0 +1,6 @@
+data
+checkpoint
+curve/*
+!curve/pretrained
+
+main.sh
