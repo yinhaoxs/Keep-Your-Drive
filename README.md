@@ -1,79 +1,34 @@
-# Arcface_RankNet(face kyd)
+# 人脸风险预测模型
 
-Pytorch0.4.1 codes for Arcface_KYD
+## 1.模型介绍
+    --技术：Arcface人脸识别算法、孪生排序网络、soft_bce loss策略函数、联合loss函数训练
+    --模型扩展：结构化数据与非结构化数据联合建模
 
-## 1. Intro
+## 2.预训练模型
+    --Arcface预训练模型：https://pan.baidu.com/s/12BUjjwy1uUTEF9HCx5qvoQ
+    --Mobileface预训练模型：https://pan.baidu.com/s/1hqNNkcAjQOSxUjofboN6qg
+    --face align预训练模型：mmod_human_face_detector.dat (dlib官网提供的68个关键点模型)
 
-- This repo is a implementation of FicialRiskNet
-- For models, including the pytorch implementation of the backbone modules of Arcface and MobileFacenet. 
+## 3.数据集
+    --face recognition数据集：LFW人脸识别数据集（官网提供下载）
+      --相同人脸随机构成pairs对，label(y)均设置为0.（同一人的pairs对的风险值相同）
+    --KYD风险人脸数据集：采集带有风险值（label）的图像数据集
+      --随机构成人脸pairs对，label（y）为风险值的差值.
 
-## 2. Pretrained Models & Performance
-
-[IR-SE50 @ BaiduNetdisk](https://pan.baidu.com/s/12BUjjwy1uUTEF9HCx5qvoQ), [IR-SE50 @ Onedrive](https://1drv.ms/u/s!AhMqVPD44cDOhkPsOU2S_HFpY9dC)
-
-| LFW(%) | CFP-FF(%) | CFP-FP(%) | AgeDB-30(%) | calfw(%) | cplfw(%) | vgg2_fp(%) |
-| ------ | --------- | --------- | ----------- | -------- | -------- | ---------- |
-| 0.9952 | 0.9962    | 0.9504    | 0.9622      | 0.9557   | 0.9107   | 0.9386     |
-
-[Mobilefacenet @ BaiduNetDisk](https://pan.baidu.com/s/1hqNNkcAjQOSxUjofboN6qg), [Mobilefacenet @ OneDrive](https://1drv.ms/u/s!AhMqVPD44cDOhkSMHodSH4rhfb5u)
-
-| LFW(%) | CFP-FF(%) | CFP-FP(%) | AgeDB-30(%) | calfw(%) | cplfw(%) | vgg2_fp(%) |
-| ------ | --------- | --------- | ----------- | -------- | -------- | ---------- |
-| 0.9918 | 0.9891    | 0.8986    | 0.9347      | 0.9402   | 0.866    | 0.9100     |
-
-## 3. How to use
-
-- clone
-
-  ```
-  git clone https://github.com/yinhaoxss/Arcface_RankNet.git
-  ```
-
-### 3.1 Data Preparation(labels):
-
-##### 3.1.1 Preparation FicialRisk faces
-
-*** FicialRisk Faces structure: .csv file(pd file) ***
-
-| face_picture(images path) | loss_ratio  | 
-| ------------------------- | ----------- | 
-| /Users/yinhao_x/kyd_1.jpg | 0.8986      |
-...
-| /Users/yinhao_x/kyd_m.jpg | 1.9804      |
-
-##### 3.1.2 Preparation LFW faces
-
-*** LFW faces structure: .csv file(pd file) ***
-
-| face_picture(images1 path) | face_picture(images2 path)  | loss_ratio  | 
-| -------------------------  | --------------------------  | ----------- | 
-| /Users/yinhao_x/lfw_1.jpg  | /Users/yinhao_x/lfw_2.jpg   | 0.8986      |
-...
-| /Users/yinhao_x/lfw_m.jpg  | /Users/yinhao_x/lfw_n.jpg   | 1.9804      |
-
-### 3.2 Data Preparation(images):
-
-##### 3.2.1 Detection and align (112 * 112)
-
-```
-​```
-python mtcnn_pytorch/mtcnn.py  or python dlib/align.py
-
-​```
-```
-### 3.3 Training:
-
-```
-​```
-python train.py
-
-​```
-```
-### 3.4 testing:
-
-```
-​```
-python test.py
-
-​```
-```
+## 4.数据预处理
+    数据大小处理为（112*112）
+    --LFW数据集：同一人的不同图片构成pairs对，写入csv文件便于后续训练
+    --KYD数据集：所有训练数据随机构成pairs对，无需处理，训练时batch中会进行随机配对
+    
+## 5.模型训练
+    --batch训练：读取LFW文件，每次随机取64对图像输入到batch；随机在dataloader中取64对KYD图片对输入到batch（batch=12），确定训练时两组不同          的数据比例为1：1，保证训练出的模型gini高，方差低
+    --loss函数:采用soft_bce loss函数作为模型收敛的策略函数
+    --分布式训练 python train.py
+    --单卡测试 python test.py
+    --demo
+    
+    
+## 6.指标
+    --gini系数
+    --同一人不用人脸的风险系数方差std
+     代码地址：git clone https://github.com/yinhaoxss/Arcface_RankNet.git
