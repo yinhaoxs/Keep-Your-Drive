@@ -21,11 +21,11 @@
     --KYD数据集：所有训练数据随机构成pairs对，无需处理，训练时batch中会进行随机配对
     
 ## 5.模型训练
-    --batch训练：读取LFW文件，每次随机取64对图像输入到batch；随机在dataloader中取64对KYD图片对输入到batch（batch=12），确定训练时两组不同          的数据比例为1：1，保证训练出的模型gini高，方差低
+    --batch训练：读取LFW文件，每次随机取64对图像输入到batch；随机在dataloader中取64对KYD图片对输入到batch（batch=128），确定训练时两组不同          的数据比例为1：1，保证训练出的模型gini高，方差低
     --loss函数:采用soft_bce loss函数作为模型收敛的策略函数
     --分布式训练 python train.py
     --单卡测试 python test.py
-    --demo
+    --demo.py
     
     
 ## 6.指标
