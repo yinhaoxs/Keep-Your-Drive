@@ -11,11 +11,7 @@ data: 2019-09-17 20:21
 desc:
 '''
 
-import torch
-import numpy as np
-import pandas as pd
 from PIL import Image
-from torchvision import transforms
 import torch.utils.data as data
 import os
 

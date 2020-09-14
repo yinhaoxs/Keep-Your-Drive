@@ -92,7 +92,7 @@ def draw_std_curve(train_std, valid_std):
 
 
 if __name__ == '__main__':
-    log_files = './record/log/*txt'
+    log_files = './log/*txt'
     train_epoch_loss, valid_epoch_loss, train_epoch_margin_loss, valid_epoch_margin_loss, \
     train_epoch_mse_loss, valid_epoch_mse_loss, train_gini, valid_gini, train_std, valid_std = log_read_draw(log_files)
 

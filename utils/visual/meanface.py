@@ -66,10 +66,10 @@ def merge_risk_picture(img_dir):
 
 if __name__ == '__main__':
     # base_dir, save_dir
-    base_dir = './image_set/image/'
-    save_dir = './record/log/'
+    base_dir = './image/'
+    save_dir = './log/'
     nosort_file = './'
-    res = './imageset/label/Res_facepicturename.csv'
+    res = './checkpoints/csv/Res_facepicturename.csv'
     mean_face(base_dir, save_dir)
     sort_csv_former, sort_csv_later = risk_face(nosort_file, res)
     merge_risk_picture(save_dir)

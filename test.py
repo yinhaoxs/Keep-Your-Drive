@@ -13,27 +13,22 @@ desc:
 
 import torch
 from torchvision import transforms
-import numpy as np
 import pandas as pd
-import time
 from PIL import Image
-import random
 import os
-import copy
-from glob import glob
 import json
-from collections import OrderedDict
-from model import model
+from models import models
 
 # set gpu
-os.environ['CUDA_VISIBLE_DEVICES'] = "7"
+os.environ['CUDA_VISIBLE_DEVICES'] = "0"
+
 
 
 # Encapsulating Interface
 class KYD_MODEL(object):
     def __init__(self):
         # 1.1 loading trained_model
-        self.pretrained_dict = torch.load('./ptretrained_model/checkpoint/*.pth')
+        self.pretrained_dict = torch.load('./checkpoints/*.pth')
 
         # 1.2 load parallel_model
         # self.new_state_dict = OrderedDict()
@@ -42,7 +37,7 @@ class KYD_MODEL(object):
         #     self.new_state_dict[name] = v
 
         # 1.3 load model
-        self.model = model.Backbone(num_layers=50, drop_ratio=0, mode='ir_se')
+        self.model = models.Backbone(num_layers=50, drop_ratio=0, mode='ir_se')
         self.model_dict = self.model.state_dict()
         self.pretrained_dict = {k: v for k, v in self.pretrained_dict.items() if k in self.model_dict}
         self.model_dict.update(self.pretrained_dict)
